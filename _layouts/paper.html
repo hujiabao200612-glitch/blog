@@ -22,4 +22,15 @@ layout: page
 {{ page.abstract_zh }}
 </div>
 
+## 英文全文 Full Text
+
+<div class="paper-fulltext" style="margin-bottom:0.75rem;">
+  <iframe src="https://arxiv.org/html/{{ page.arxiv_id }}" title="arXiv HTML 全文" loading="lazy"
+    style="width:100%;height:85vh;min-height:600px;border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;background:#fff;"></iframe>
+</div>
+<p style="font-size:.85rem;color:var(--text-muted-color,#6c757d);margin-bottom:2rem;">
+  全文托管于 arXiv，此处为嵌入阅读。若加载异常，请直接访问
+  <a href="https://arxiv.org/html/{{ page.arxiv_id }}" target="_blank" rel="noopener">arXiv HTML</a>。
+</p>
+
 {{ content }}
