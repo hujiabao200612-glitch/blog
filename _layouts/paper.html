@@ -1,0 +1,25 @@
+---
+layout: page
+---
+
+<div class="paper-arxiv" style="background:var(--card-bg,#f8f9fa);border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+  <div style="font-size:1.05rem;font-weight:600;margin-bottom:.4rem;">
+    📄 <a href="https://arxiv.org/abs/{{ page.arxiv_id }}" target="_blank" rel="noopener">arXiv:{{ page.arxiv_id }}</a>
+    <span style="font-weight:400;font-size:.85rem;color:var(--text-muted-color,#6c757d);">（英文全文：<a href="https://arxiv.org/html/{{ page.arxiv_id }}" target="_blank" rel="noopener">HTML</a> · <a href="https://arxiv.org/pdf/{{ page.arxiv_id }}" target="_blank" rel="noopener">PDF</a>）</span>
+  </div>
+  <div style="font-size:.9rem;color:var(--text-muted-color,#6c757d);">
+    {{ page.authors | join: ", " }} · {{ page.date | date: "%Y-%m-%d" }}
+  </div>
+</div>
+
+## 摘要 Abstract
+
+<div class="abstract-en" style="margin-bottom:1rem;">
+{{ page.abstract_en }}
+</div>
+
+<div class="abstract-zh" style="border-left:3px solid var(--link-color,#2a9d8f);padding-left:1rem;margin-bottom:2rem;">
+{{ page.abstract_zh }}
+</div>
+
+{{ content }}

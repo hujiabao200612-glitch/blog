@@ -1,0 +1,12 @@
+- name: Ascend-910B-PPO-RLHF
+  url: https://github.com/hujiabao200612-glitch/Ascend-910B-PPO-RLHF
+  tech: Python · verl · vllm-ascend · Ascend 910B
+  desc: Ascend 910B 8 卡 PPO RLHF（RLVR）后训练套件。核心工作在奖励函数设计上：对比了稀疏和稠密两种奖励的消融效果。
+- name: Operator-selection-strategy
+  url: https://github.com/hujiabao200612-glitch/Operator-selection-strategy
+  tech: Python · UCB · DQN
+  desc: 大一大创项目：算子选择策略（WTA 问题）。复现 UCB 算法，并用 DQN 做自适应算子选择。
+- name: duckmail
+  url: https://github.com/hujiabao200612-glitch/duckmail
+  tech: TypeScript
+  desc: TypeScript 练手项目。
