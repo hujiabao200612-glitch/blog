@@ -62,8 +62,8 @@ layout: page
 </div>
 {% elsif page.inline_html == "paper_2504_01990_body.html" %}
 <div class="paper-fulltext" style="margin-bottom:0.75rem;">
-  <iframe src="https://arxiv.org/html/2504.01990" title="arXiv HTML 全文" loading="lazy"
-    style="width:100%;height:85vh;min-height:600px;border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;background:#fff;"></iframe>
+  <iframe src="https://arxiv.org/html/2504.01990" title="arXiv HTML 全文" loading="lazy" scrolling="no"
+    style="width:100%;height:30000px;border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;background:#fff;overflow:hidden;"></iframe>
 </div>
 <p style="font-size:.85rem;color:var(--text-muted-color,#6c757d);margin-bottom:2rem;">
   全文托管于 arXiv，此处为嵌入阅读（文件较大，直接内嵌会导致构建失败）。若加载异常，请直接访问
@@ -71,8 +71,8 @@ layout: page
 </p>
 {% else %}
 <div class="paper-fulltext" style="margin-bottom:0.75rem;">
-  <iframe src="https://arxiv.org/html/{{ arxiv_id }}" title="arXiv HTML 全文" loading="lazy"
-    style="width:100%;height:85vh;min-height:600px;border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;background:#fff;"></iframe>
+  <iframe src="https://arxiv.org/html/{{ arxiv_id }}" title="arXiv HTML 全文" loading="lazy" scrolling="no"
+    style="width:100%;height:30000px;border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;background:#fff;overflow:hidden;"></iframe>
 </div>
 <p style="font-size:.85rem;color:var(--text-muted-color,#6c757d);margin-bottom:2rem;">
   全文托管于 arXiv，此处为嵌入阅读（该论文为 arXiv 默认授权，不可转载全文）。若加载异常，请直接访问
