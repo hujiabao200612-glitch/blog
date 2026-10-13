@@ -40,6 +40,10 @@ layout: page
     .paper-fulltext-inline .ltx_document{max-width:100% !important;margin:0 !important;padding:0 !important;}
     .paper-fulltext-inline .ltx_figure img{max-width:100%;height:auto;}
     .paper-fulltext-inline{font-size:.95rem;line-height:1.75;}
+    /* 论文全文页：把 Chirpy 的内容列从 col-xl-9 (75%) 加宽到 100% */
+    @media (min-width: 1200px){
+      .col-xl-9:has(.paper-fulltext-inline){flex:0 0 100% !important;max-width:1100px !important;}
+    }
   </style>
   <p style="font-size:.85rem;color:var(--text-muted-color,#6c757d);margin-bottom:1rem;">
     以下为论文全文（CC-BY 4.0 授权，转载自 arXiv，图片托管于 arxiv.org）：
