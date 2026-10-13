@@ -49,6 +49,11 @@ layout: page
       width:auto !important;margin:0.5rem 0 !important;}
     .paper-fulltext-inline .ltx_note_content{font-size:.82rem;color:var(--text-muted-color,#6c757d);
       border-left:2px solid var(--card-border-color,#e9ecef);padding-left:.8rem;margin:.5rem 0;}
+    /* 无横向滚动条：内容不溢出，宽表允许内部滚动 */
+    .paper-fulltext-inline{overflow-x:hidden;}
+    .paper-fulltext-inline .ltx_table{overflow-x:auto;max-width:100%;}
+    .paper-fulltext-inline img{max-width:100% !important;height:auto !important;}
+    .paper-fulltext-inline pre{overflow-x:auto;max-width:100%;}
   </style>
   <p style="font-size:.85rem;color:var(--text-muted-color,#6c757d);margin-bottom:1rem;">
     以下为论文全文（CC-BY 4.0 授权，转载自 arXiv，图片托管于 arxiv.org）：
