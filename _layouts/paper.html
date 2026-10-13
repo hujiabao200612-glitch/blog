@@ -30,13 +30,23 @@ layout: page
 
 ## 英文全文 Full Text
 
+{% if page.inline_html %}
+<div class="paper-fulltext-inline" style="margin-bottom:2rem;">
+  <link rel="stylesheet" href="https://arxiv.org/static/browse/0.3.4/css/arxiv-html-papers-20260823.css" type="text/css">
+  <p style="font-size:.85rem;color:var(--text-muted-color,#6c757d);margin-bottom:1rem;">
+    以下为论文全文（CC 授权，转载自 arXiv，图片托管于 arxiv.org）：
+  </p>
+  {% include {{ page.inline_html }} %}
+</div>
+{% else %}
 <div class="paper-fulltext" style="margin-bottom:0.75rem;">
   <iframe src="https://arxiv.org/html/{{ arxiv_id }}" title="arXiv HTML 全文" loading="lazy"
     style="width:100%;height:85vh;min-height:600px;border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;background:#fff;"></iframe>
 </div>
 <p style="font-size:.85rem;color:var(--text-muted-color,#6c757d);margin-bottom:2rem;">
-  全文托管于 arXiv，此处为嵌入阅读。若加载异常，请直接访问
+  全文托管于 arXiv，此处为嵌入阅读（该论文为 arXiv 默认授权，不可转载全文）。若加载异常，请直接访问
   <a href="https://arxiv.org/html/{{ arxiv_id }}" target="_blank" rel="noopener">arXiv HTML</a>。
 </p>
+{% endif %}
 
 {{ content }}
