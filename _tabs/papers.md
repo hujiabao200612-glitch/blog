@@ -4,8 +4,6 @@ icon: fas fa-book-open
 order: 2
 ---
 
-这里收录我精读过的论文：外面是中文摘要，点进去是中英双语全文，顶部附 arXiv 链接。
-
 {% for paper in site.papers reversed %}
 <div class="paper-card" style="border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;">
   <h3 style="margin-top:0;"><a href="{{ paper.url | relative_url }}">{{ paper.title }}</a></h3>
