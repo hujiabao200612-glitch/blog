@@ -226,112 +226,81 @@ pre {
   text-align: right;
 }
 
-/* ---------- Gantt-style multi-track timeline ---------- */
-.gantt {
+/* ---------- Dual vertical timelines ---------- */
+.duo-timelines {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
   margin: 1em 0 1.4em;
-  font-size: 0.92rem;
 }
-.gantt-axis {
-  position: relative;
-  height: 1.4rem;
-  margin-left: 4.2rem;
-  border-bottom: 1px solid var(--timeline-color);
-  color: var(--text-muted-color);
-  font-size: 0.78rem;
+@media (max-width: 640px) {
+  .duo-timelines {
+    grid-template-columns: 1fr;
+  }
 }
-.gantt-axis span {
-  position: absolute;
-  transform: translateX(-50%);
-}
-.gantt-axis span:first-child {
-  transform: none;
-}
-.gantt-body {
-  position: relative;
-}
-.gantt-now {
-  position: absolute;
-  top: -1.4rem;
-  bottom: 0;
-  margin-left: 4.2rem;
-  border-left: 1px dashed #b23c3c;
-  z-index: 3;
-  pointer-events: none;
-}
-.gantt-now i {
-  position: absolute;
-  top: -1.05rem;
-  left: -0.4rem;
-  font-style: normal;
-  font-size: 0.72rem;
-  color: #b23c3c;
-  white-space: nowrap;
-}
-.gantt-row {
-  display: flex;
-  align-items: center;
-  margin-top: 0.7rem;
-}
-.gantt-tag {
-  flex: 0 0 4.2rem;
-  font-weight: 700;
+.duo-timelines h4 {
+  font-size: 1rem;
+  margin: 0 0 0.8rem;
   color: var(--heading-color);
-  font-size: 0.9rem;
 }
-.gantt-lane {
+.vtimeline {
   position: relative;
-  flex: 1;
-  height: 2.5rem;
-  background: rgb(120 100 60 / 6%);
-  border-radius: 0.45rem;
+  margin: 0 0 0 0.4rem;
+  padding-left: 1.5rem;
+  list-style: none;
 }
-.gantt-bar {
+.vtimeline::before {
+  content: '';
   position: absolute;
+  left: 0.42rem;
   top: 0.3rem;
   bottom: 0.3rem;
-  border-radius: 0.35rem;
-  display: flex;
-  align-items: center;
-  padding: 0 0.7rem;
-  white-space: nowrap;
-  overflow: visible;
-  font-size: 0.85rem;
-  line-height: 1.35;
+  width: 2px;
+  background: var(--timeline-color);
+  border-radius: 2px;
 }
-.gantt-bar.g-main {
-  background: linear-gradient(90deg, #a89a7c, #8b5e34);
-  color: #fffdf6;
-  box-shadow: 0 1px 4px rgb(80 65 35 / 25%);
+.vtimeline > li {
+  position: relative;
+  padding-bottom: 1rem;
 }
-.gantt-bar.g-proj {
-  background: var(--card-bg);
-  border: 1px solid var(--tag-border);
-  color: var(--text-color);
-  box-shadow: var(--card-shadow);
-  min-width: 3.2rem;
+.vtimeline > li:last-child {
+  padding-bottom: 0;
 }
-.gantt-bar .g-lines {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.3;
+.vtimeline > li::before {
+  content: '';
+  position: absolute;
+  left: -1.5rem;
+  top: 0.32rem;
+  width: 0.68rem;
+  height: 0.68rem;
+  margin-left: 0.08rem;
+  border-radius: 50%;
+  background: var(--timeline-node-bg);
+  border: 2px solid var(--main-bg);
+  box-shadow: 0 0 0 1px var(--timeline-node-bg);
 }
-.gantt-bar .g-sub {
-  font-size: 0.76rem;
-  opacity: 0.85;
+.vtimeline > li.future::before {
+  background: transparent;
+  border-style: dashed;
 }
-.gantt-dates {
-  margin-left: 0.5rem;
-  font-size: 0.76rem;
+.vtimeline .tl-date {
+  display: inline-block;
+  font-size: 0.78rem;
   color: var(--text-muted-color);
-  white-space: nowrap;
+  border: 1px solid var(--tag-border);
+  border-radius: 999px;
+  padding: 0.05rem 0.6rem;
+  margin-bottom: 0.25rem;
 }
-.gantt-row.g-main-row .gantt-lane {
-  height: 3.6rem;
+.vtimeline .tl-title {
+  font-weight: 700;
+  color: var(--heading-color);
+  font-size: 0.95rem;
 }
-.gantt-row.g-main-row .gantt-bar {
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+.vtimeline .tl-desc {
+  color: var(--text-muted-color);
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
 /* ---------- Hero particle canvas ---------- */

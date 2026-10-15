@@ -60,40 +60,41 @@ title: 首页
 ## 🎓 个人经历
 {:.reveal}
 
-<div class="gantt reveal" markdown="0">
-  <div class="gantt-axis">
-    <span style="left:0%">2025</span>
-    <span style="left:20%">2026</span>
-    <span style="left:40%">2027</span>
-    <span style="left:60%">2028</span>
-    <span style="left:80%">2029</span>
+<div class="duo-timelines reveal" markdown="0">
+  <div>
+    <h4>🔬 科研经历</h4>
+    <ul class="vtimeline">
+      <li>
+        <span class="tl-date">2026.01 – 2026.09</span>
+        <div class="tl-title">校级大创 · DQN 自适应算子选择</div>
+        <div class="tl-desc">复现 UCB 算法，用 DQN 做自适应算子选择</div>
+      </li>
+      <li>
+        <span class="tl-date">2026.09 – 2026.10</span>
+        <div class="tl-title">Ascend-910B PPO-RLHF</div>
+        <div class="tl-desc">在 Ascend 910B 上做 PPO RLHF 后训练，核心工作是奖励函数设计，做过稀疏/稠密两种奖励的消融对比</div>
+      </li>
+      <li class="future">
+        <span class="tl-date">即将开始</span>
+        <div class="tl-title">科研实习</div>
+        <div class="tl-desc">正在联系老师，方向待定</div>
+      </li>
+    </ul>
   </div>
-  <div class="gantt-body">
-    <div class="gantt-now" style="left:35%"><i>现在</i></div>
-    <div class="gantt-row g-main-row">
-      <div class="gantt-tag">本科</div>
-      <div class="gantt-lane">
-        <div class="gantt-bar g-main" style="left:0%;width:80%">
-          <span class="g-lines"><strong>北京理工大学</strong><span class="g-sub">人工智能（徐特立英才班）· 2025 – 2029</span></span>
-        </div>
-      </div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-tag">大创</div>
-      <div class="gantt-lane">
-        <div class="gantt-bar g-proj" style="left:20%;width:13.3%">
-          <span class="g-lines"><strong>DQN 自适应算子选择</strong><span class="g-sub">2026.01 – 2026.09</span></span>
-        </div>
-      </div>
-    </div>
-    <div class="gantt-row">
-      <div class="gantt-tag">PPO</div>
-      <div class="gantt-lane">
-        <div class="gantt-bar g-proj" style="left:33.3%;min-width:3.2rem">
-          <span class="g-lines"><strong>Ascend-910B RLHF</strong><span class="g-sub">2026.09 – 2026.10</span></span>
-        </div>
-      </div>
-    </div>
+  <div>
+    <h4>📚 学习经历</h4>
+    <ul class="vtimeline">
+      <li>
+        <span class="tl-date">2025 – 2029</span>
+        <div class="tl-title">本科</div>
+        <div class="tl-desc">北京理工大学<br>人工智能（徐特立英才班）</div>
+      </li>
+      <li class="future">
+        <span class="tl-date">2029 –</span>
+        <div class="tl-title">研究生</div>
+        <div class="tl-desc">未来可期</div>
+      </li>
+    </ul>
   </div>
 </div>
 
@@ -167,7 +168,7 @@ title: 首页
   var N = 55;
   for (var i = 0; i < N; i++) {
     pts.push({
-      x: Math.random() * 2000, y: Math.random() * 2000,
+      x: Math.random() * c.width, y: Math.random() * c.height,
       vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
       r: Math.random() * 1.6 + 0.5
     });
