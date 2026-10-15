@@ -13,6 +13,15 @@ title: 首页
 
 研究兴趣：**深度学习**、**强化学习**、**多模态大模型**。
 
+<div class="tech-badges" markdown="0">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" loading="lazy" />
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" loading="lazy" />
+  <img src="https://img.shields.io/badge/CUDA-76B900?style=flat-square&logo=nvidia&logoColor=white" alt="CUDA" loading="lazy" />
+  <img src="https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white" alt="C++" loading="lazy" />
+  <img src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black" alt="Linux" loading="lazy" />
+  <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git" loading="lazy" />
+</div>
+
 **做过的事**
 
 - **Ascend-910B-PPO-RLHF**：在 Ascend 910B 上做 PPO RLHF 后训练，基于 verl + vllm-ascend；核心工作是奖励函数设计，做过稀疏/稠密两种奖励的消融对比
@@ -44,7 +53,13 @@ title: 首页
 
 ## 🎓 个人经历
 
-- **2025 – 2029** ｜ 北京理工大学，人工智能专业，本科（徐特立英才班）
+<ul class="timeline">
+  <li>
+    <span class="tl-date">2025 – 2029</span>
+    <div class="tl-title">北京理工大学 · 人工智能专业本科</div>
+    <div class="tl-desc">徐特立英才班</div>
+  </li>
+</ul>
 
 ## 📝 最新文章
 
@@ -53,6 +68,9 @@ title: 首页
 {% else %}
 > 还没有文章，敬请期待。
 {% endfor %}
+
+<div id="reading-progress"></div>
+<button id="back-to-top" aria-label="回到顶部" title="回到顶部">↑</button>
 
 <script>
 (function() {
@@ -79,6 +97,25 @@ title: 首页
     }
   }
   tick();
+})();
+
+/* reading progress bar + back to top */
+(function() {
+  var bar = document.getElementById("reading-progress");
+  var btn = document.getElementById("back-to-top");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    bar.style.width = p + "%";
+    if (h.scrollTop > 400) { btn.classList.add("show"); }
+    else { btn.classList.remove("show"); }
+  }
+  btn.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 })();
 </script>
 
