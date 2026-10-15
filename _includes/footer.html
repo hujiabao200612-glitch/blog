@@ -52,8 +52,7 @@
 <canvas id="universe"></canvas>
 <!-- 浅色模式全站暖色微粒 -->
 <canvas id="ambient-particles"></canvas>
-<!-- 小星星鼠标拖尾 -->
-<canvas id="star-trail"></canvas>
+
 <style>
   #universe {
     display: none;
@@ -72,13 +71,42 @@
     z-index: -1;
   }
   html:not([data-bs-theme="dark"]) #ambient-particles { display: block; }
-  #star-trail {
-    position: fixed;
-    left: 0; top: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-  }
 </style>
 <script src="{{ '/assets/js/universe.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/ambient-particles.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/star-trail.js' | relative_url }}"></script>
+<!-- cursorly.js 鼠标拖尾：浅色暖金 / 深色浅金 -->
+<script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
+<script>
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  var COLORS = {
+    light: ['#c9a86a', '#d4b87a', '#b8965a', '#e8d5a8'],
+    dark: ['#e8d5a8', '#d4b87a', '#c9a86a', '#f5f0e3']
+  };
+  function isDark() {
+    return document.documentElement.getAttribute('data-bs-theme') === 'dark';
+  }
+  var cursor = null;
+  function init() {
+    if (cursor) { try { cursor.disable(); } catch (e) {} }
+    cursor = Cursorly.init({
+      cursor: 0,
+      effect: {
+        name: 'sparkle',
+        color: isDark() ? COLORS.dark : COLORS.light,
+        density: 5,
+        size: [2, 7],
+        decay: 0.94
+      }
+    });
+  }
+  init();
+  // 跟随主题切换重载配色
+  new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.attributeName === 'data-bs-theme') init();
+    });
+  }).observe(document.documentElement, { attributes: true });
+})();
+</script>

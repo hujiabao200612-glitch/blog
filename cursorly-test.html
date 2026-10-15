@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cursorly.js 效果测试 - 博客配色</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Georgia, "Noto Serif SC", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+  }
+  body.light {
+    background: #f5f0e3;
+    color: #3a3226;
+  }
+  body.dark {
+    background: #161310;
+    color: #e8e0d0;
+  }
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  p { font-size: 1.1rem; opacity: 0.8; max-width: 600px; text-align: center; line-height: 1.8; }
+  .controls {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  button {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border: 1px solid currentColor;
+    background: transparent;
+    color: inherit;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button:hover { opacity: 0.7; }
+  button.active { background: currentColor; }
+  button.active span { color: var(--btn-active-text); }
+  body.light { --btn-active-text: #f5f0e3; }
+  body.dark { --btn-active-text: #161310; }
+  .hint {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body class="light">
+<h1>鼠标特效测试</h1>
+<p>移动鼠标试试拖尾效果。浅色/深色模式用不同配色，点击下方按钮切换效果。</p>
+<div class="controls">
+  <button onclick="setTheme('light')"><span>浅色模式</span></button>
+  <button onclick="setTheme('dark')"><span>深色模式</span></button>
+</div>
+<div class="controls">
+  <button onclick="setEffect('sparkle')"><span>✨ 闪粉</span></button>
+  <button onclick="setEffect('trail')"><span>🌈 拖尾</span></button>
+  <button onclick="setEffect('comet')"><span>☄️ 彗星</span></button>
+</div>
+<p class="hint">基于 cursorly.js，CDN 引入，无依赖</p>
+
+<script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
+<script>
+  // 博客配色
+  const COLORS = {
+    light: ["#c9a86a", "#d4b87a", "#b8965a", "#e8d5a8"],  // 暖金色系
+    dark: ["#e8d5a8", "#d4b87a", "#c9a86a", "#f5f0e3"]     // 浅金色系
+  };
+  let currentTheme = 'light';
+  let cursor = null;
+
+  function initCursor(effectName) {
+    if (cursor) cursor.disable();
+    cursor = Cursorly.init({
+      cursor: 0,
+      effect: {
+        name: effectName,
+        color: COLORS[currentTheme],
+        density: 6,
+        size: [2, 8],
+        decay: 0.94
+      }
+    });
+  }
+
+  function setTheme(theme) {
+    currentTheme = theme;
+    document.body.className = theme;
+    // 重新初始化以应用新配色
+    const currentEffect = window._currentEffect || 'sparkle';
+    initCursor(currentEffect);
+  }
+
+  function setEffect(name) {
+    window._currentEffect = name;
+    initCursor(name);
+  }
+
+  // 初始化
+  window._currentEffect = 'sparkle';
+  initCursor('sparkle');
+</script>
+</body>
+</html>
