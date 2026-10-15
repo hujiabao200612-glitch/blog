@@ -75,12 +75,17 @@
 <script src="{{ '/assets/js/universe.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/ambient-particles.js' | relative_url }}"></script>
 <!-- cursorly.js 鼠标拖尾：浅色暖金 / 深色浅金 -->
-<script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@v1.0.1/dist/cursorly.min.js"></script>
 <script>
 (function() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-  if (typeof Cursorly === 'undefined') return;
+  if (typeof Cursorly === 'undefined') {
+    // CDN 可能慢，重试一次
+    setTimeout(function() {
+      if (typeof Cursorly !== 'undefined') init();
+    }, 1500);
+    return;
+  }
   var COLORS = {
     light: ['#c9a86a', '#d4b87a', '#b8965a', '#e8d5a8'],
     dark: ['#e8d5a8', '#d4b87a', '#c9a86a', '#f5f0e3']
