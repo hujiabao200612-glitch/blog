@@ -14,7 +14,7 @@
   resize();
   window.addEventListener('resize', resize);
 
-  var N = 55;
+  var N = 110;
   for (var i = 0; i < N; i++) {
     pts.push({
       x: Math.random() * canvas.width,
