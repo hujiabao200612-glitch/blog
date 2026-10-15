@@ -1,9 +1,6 @@
 ---
 ---
 
-/* ---------- Noto Serif SC webfont (loli.net mirror for CN) ---------- */
-@import url('https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
-
 @use 'abstracts/variables' with (
   $theme: '{{ site.theme_mode }}'
 );

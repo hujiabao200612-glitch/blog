@@ -3,6 +3,9 @@ layout: page
 title: 首页
 ---
 
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap">
+
 <div class="hero-intro" markdown="1">
 
 ## 👋 你好，我是胡斯源

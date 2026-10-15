@@ -2,6 +2,9 @@
 layout: page
 ---
 
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap">
+
 {% comment %}从 URL 提取 arXiv ID（如 /papers/2507-21046-xxx/ -> 2507.21046），避免 front matter 解析异常{% endcomment %}
 {% assign _slug = page.url | split: '/' | slice: 2, 1 | first %}
 {% assign _parts = _slug | split: '-' %}
