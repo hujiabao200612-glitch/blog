@@ -7,6 +7,7 @@ title: 首页
 <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap">
 
 <div class="hero-intro" markdown="1">
+<canvas id="hero-particles"></canvas>
 
 ## 👋 你好，我是胡斯源
 
@@ -42,6 +43,7 @@ title: 首页
 </div>
 
 ## 📊 GitHub 动态
+{:.reveal}
 
 <div class="gh-stats" markdown="0">
   <img src="https://github-readme-stats.vercel.app/api?username=hujiabao200612-glitch&show_icons=true&theme=transparent&hide_border=true&title_color=8b5e34&icon_color=8b5e34&text_color=5c4a32" alt="GitHub Stats" loading="lazy" />
@@ -49,22 +51,54 @@ title: 首页
 </div>
 
 ## 📌 板块
+{:.reveal}
 
 - [📦 **项目**]({{ '/projects/' | relative_url }}) — GitHub 上的项目：Ascend-910B PPO-RLHF、算子选择策略等
 - [📖 **我看的论文**]({{ '/papers/' | relative_url }}) — 精读论文的中英双语笔记
 - [✏️ **博客文章**]({{ '/archives/' | relative_url }}) — 学习笔记与思考，敬请期待
 
 ## 🎓 个人经历
+{:.reveal}
 
-<ul class="timeline">
-  <li>
-    <span class="tl-date">2025 – 2029</span>
-    <div class="tl-title">北京理工大学 · 人工智能专业本科</div>
-    <div class="tl-desc">徐特立英才班</div>
-  </li>
-</ul>
+<div class="gantt reveal" markdown="0">
+  <div class="gantt-axis">
+    <span style="left:0%">2025</span>
+    <span style="left:20%">2026</span>
+    <span style="left:40%">2027</span>
+    <span style="left:60%">2028</span>
+    <span style="left:80%">2029</span>
+  </div>
+  <div class="gantt-body">
+    <div class="gantt-now" style="left:35%"><i>现在</i></div>
+    <div class="gantt-row g-main-row">
+      <div class="gantt-tag">本科</div>
+      <div class="gantt-lane">
+        <div class="gantt-bar g-main" style="left:0%;width:80%">
+          <span class="g-lines"><strong>北京理工大学</strong><span class="g-sub">人工智能（徐特立英才班）· 2025 – 2029</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-tag">大创</div>
+      <div class="gantt-lane">
+        <div class="gantt-bar g-proj" style="left:20%;width:13.3%">
+          <span class="g-lines"><strong>DQN 自适应算子选择</strong><span class="g-sub">2026.01 – 2026.09</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-tag">PPO</div>
+      <div class="gantt-lane">
+        <div class="gantt-bar g-proj" style="left:33.3%;min-width:3.2rem">
+          <span class="g-lines"><strong>Ascend-910B RLHF</strong><span class="g-sub">2026.09 – 2026.10</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 ## 📝 最新文章
+{:.reveal}
 
 {% for post in site.posts limit:5 %}
 - [{{ post.title }}]({{ post.url | relative_url }}) · {{ post.date | date: "%Y-%m-%d" }}
@@ -119,6 +153,70 @@ title: 首页
   });
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+})();
+
+/* hero particle network (warm, subtle) */
+(function() {
+  var c = document.getElementById("hero-particles");
+  if (!c || !c.getContext) return;
+  var ctx = c.getContext("2d"), pts = [], mouse = { x: -9999, y: -9999 };
+  var hero = c.parentElement;
+  function resize() { c.width = hero.offsetWidth; c.height = hero.offsetHeight; }
+  resize();
+  window.addEventListener("resize", resize);
+  var N = 55;
+  for (var i = 0; i < N; i++) {
+    pts.push({
+      x: Math.random() * 2000, y: Math.random() * 2000,
+      vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 1.6 + 0.5
+    });
+  }
+  hero.addEventListener("mousemove", function(e) {
+    var r = c.getBoundingClientRect();
+    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+  });
+  hero.addEventListener("mouseleave", function() { mouse.x = -9999; mouse.y = -9999; });
+  (function tick() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    var i, j, p;
+    for (i = 0; i < N; i++) {
+      p = pts[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > c.width) p.vx *= -1;
+      if (p.y < 0 || p.y > c.height) p.vy *= -1;
+      var dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 100 && d > 0.1) { p.x += dx / d * 1.1; p.y += dy / d * 1.1; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 6.283);
+      ctx.fillStyle = "rgba(139,94,52,0.30)";
+      ctx.fill();
+    }
+    for (i = 0; i < N; i++) for (j = i + 1; j < N; j++) {
+      var a = pts[i], b = pts[j], ddx = a.x - b.x, ddy = a.y - b.y, d2 = ddx * ddx + ddy * ddy;
+      if (d2 < 110 * 110) {
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = "rgba(139,94,52," + (0.12 * (1 - d2 / 12100)).toFixed(3) + ")";
+        ctx.lineWidth = 1; ctx.stroke();
+      }
+    }
+    requestAnimationFrame(tick);
+  })();
+})();
+
+/* scroll reveal */
+(function() {
+  var els = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window)) {
+    els.forEach(function(el) { el.classList.add("visible"); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el) { io.observe(el); });
 })();
 </script>
 
