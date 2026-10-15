@@ -1,0 +1,64 @@
+<!-- The Footer -->
+
+<footer
+  aria-label="Site Info"
+  class="
+    d-flex flex-column justify-content-center text-muted
+    flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3
+  "
+>
+  <p>
+    {{- '©' }}
+    <time>{{ 'now' | date: '%Y' }}</time>
+
+    {% if site.social.links %}
+      <a href="{{ site.social.links[0] }}">{{ site.social.name }}</a>.
+    {% else %}
+      <em class="fst-normal">{{ site.social.name }}</em>.
+    {% endif %}
+
+    {% if site.data.locales[include.lang].copyright.brief %}
+      <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="{{ site.data.locales[include.lang].copyright.verbose }}"
+      >
+        {{- site.data.locales[include.lang].copyright.brief -}}
+      </span>
+    {% endif %}
+  </p>
+
+  <p>
+    {%- capture _platform -%}
+      <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>
+    {%- endcapture -%}
+
+    {%- capture _theme -%}
+      <a
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="v{{ theme.version }}"
+        href="https://github.com/cotes2020/jekyll-theme-chirpy"
+        target="_blank"
+        rel="noopener"
+      >Chirpy</a>
+    {%- endcapture -%}
+
+    {{ site.data.locales[include.lang].meta | replace: ':PLATFORM', _platform | replace: ':THEME', _theme }}
+  </p>
+</footer>
+
+<!-- 星空 + 流星背景：仅暗色模式显示 -->
+<canvas id="universe"></canvas>
+<style>
+  #universe {
+    display: none;
+    position: fixed;
+    margin: 0; padding: 0; border: 0; outline: 0;
+    left: 0; top: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+  html[data-bs-theme="dark"] #universe { display: block; }
+</style>
+<script src="{{ '/assets/js/universe.js' | relative_url }}"></script>
