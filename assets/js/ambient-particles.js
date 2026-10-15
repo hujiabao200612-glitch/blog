@@ -1,4 +1,4 @@
-/* 浅色模式全站暖色微粒背景：极淡的金色尘埃缓慢漂浮 */
+/* 浅色模式全站暖色微粒背景：与首页 hero 同参数的金色粒子网络 */
 (function() {
   var canvas = document.getElementById('ambient-particles');
   if (!canvas) return;
@@ -14,34 +14,43 @@
   resize();
   window.addEventListener('resize', resize);
 
-  var N = 40;
+  var N = 55;
   for (var i = 0; i < N; i++) {
     pts.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.15,
-      vy: (Math.random() - 0.5) * 0.12,
-      r: Math.random() * 1.8 + 0.6,
-      a: Math.random() * 0.5 + 0.5,
-      ph: Math.random() * 6.283
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 1.6 + 0.5
     });
   }
 
-  (function tick(t) {
+  (function tick() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (isLight()) {
-      for (var i = 0; i < N; i++) {
-        var p = pts[i];
-        p.x += p.vx; p.y += p.vy; p.ph += 0.008;
-        if (p.x < -10) p.x = canvas.width + 10;
-        if (p.x > canvas.width + 10) p.x = -10;
-        if (p.y < -10) p.y = canvas.height + 10;
-        if (p.y > canvas.height + 10) p.y = -10;
-        var tw = 0.5 + 0.5 * Math.sin(p.ph);
+      var i, j, p;
+      for (i = 0; i < N; i++) {
+        p = pts[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, 6.283);
-        ctx.fillStyle = 'rgba(176,141,79,' + (0.10 + 0.10 * tw * p.a).toFixed(3) + ')';
+        ctx.fillStyle = 'rgba(139,94,52,0.30)';
         ctx.fill();
+      }
+      for (i = 0; i < N; i++) for (j = i + 1; j < N; j++) {
+        var a = pts[i], b = pts[j],
+            dx = a.x - b.x, dy = a.y - b.y,
+            d2 = dx * dx + dy * dy;
+        if (d2 < 110 * 110) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = 'rgba(139,94,52,' + (0.12 * (1 - d2 / 12100)).toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
       }
     }
     requestAnimationFrame(tick);
