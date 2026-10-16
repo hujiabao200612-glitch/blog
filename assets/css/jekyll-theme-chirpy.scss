@@ -16,48 +16,48 @@
 
 /* ---------- Anthropic-inspired warm paper theme (light mode) ---------- */
 :root[data-mode='light'] {
-  --main-bg: #f5f0e3;
-  --mask-bg: #c9bfa4;
-  --main-border-color: #e7dcc0;
+  --main-bg: #f0eee6;
+  --mask-bg: #c2beb0;
+  --main-border-color: #dedacb;
 
   --text-color: #23201a;
   --text-muted-color: #6f6759;
   --heading-color: #14120e;
   --label-color: #4a4438;
   --link-color: #23201a;
-  --link-underline-color: #d3c49c;
-  --blockquote-border-color: #d9cda9;
+  --link-underline-color: #d2cebe;
+  --blockquote-border-color: #d5d1c0;
   --blockquote-text-color: #6f6759;
 
-  --sidebar-bg: #ece3cd;
-  --sidebar-border-color: #e0d3b0;
+  --sidebar-bg: #e6e2d5;
+  --sidebar-border-color: #d8d4c4;
   --sidebar-muted-color: #5d5546;
   --sidebar-active-color: #14120e;
-  --sidebar-hover-bg: rgb(206 186 144 / 35%);
+  --sidebar-hover-bg: rgb(190 180 158 / 35%);
   --site-title-color: #4a4438;
   --site-subtitle-color: #6f6759;
-  --avatar-border-color: #f5f0e3;
+  --avatar-border-color: #f0eee6;
 
-  --topbar-bg: rgb(245 240 227 / 82%);
+  --topbar-bg: rgb(240 238 230 / 82%);
   --topbar-text-color: #4a4438;
-  --search-border-color: #e0d3b0;
-  --search-icon-color: #a89a7c;
-  --input-focus-border-color: #a89a7c;
+  --search-border-color: #d8d4c4;
+  --search-icon-color: #a09a82;
+  --input-focus-border-color: #a09a82;
 
-  --card-bg: #e9e0c8;
-  --card-hover-bg: #ded1ac;
+  --card-bg: #e5e1d3;
+  --card-hover-bg: #dbd6c2;
   --card-shadow: rgb(80 65 35 / 10%) 0 2px 8px 0, rgb(80 65 35 / 8%) 0 0 0 1px;
-  --btn-border-color: #d9cba4;
+  --btn-border-color: #d2cebe;
 
-  --tag-border: #d3c49c;
-  --tag-hover: #ded1ac;
+  --tag-border: #d2cebe;
+  --tag-hover: #dbd6c2;
 
-  --timeline-color: rgb(60 50 30 / 14%);
-  --timeline-node-bg: #a89a7c;
+  --timeline-color: rgb(70 65 50 / 14%);
+  --timeline-node-bg: #a09a82;
 
-  --tb-odd-bg: #efe8d3;
-  --tb-border-color: #ddd0ac;
-  --dash-color: #b3a582;
+  --tb-odd-bg: #e9e5d7;
+  --tb-border-color: #d8d4c4;
+  --dash-color: #a6a088;
 }
 
 /* ---------- Warm dark mode (Anthropic footer-like) ---------- */
