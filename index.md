@@ -65,11 +65,6 @@ title: 首页
         <div class="tl-title">Ascend-910B PPO-RLHF</div>
         <div class="tl-desc">在 Ascend 910B 上做 PPO RLHF 后训练，核心工作是奖励函数设计，做过稀疏/稠密两种奖励的消融对比</div>
       </li>
-      <li class="future">
-        <span class="tl-date">即将开始</span>
-        <div class="tl-title">科研实习</div>
-        <div class="tl-desc">正在联系老师，方向待定</div>
-      </li>
     </ul>
   </div>
   <div>
@@ -79,11 +74,6 @@ title: 首页
         <span class="tl-date">2025 – 2029</span>
         <div class="tl-title">本科</div>
         <div class="tl-desc">北京理工大学<br>人工智能（徐特立英才班）</div>
-      </li>
-      <li class="future">
-        <span class="tl-date">2029 –</span>
-        <div class="tl-title">研究生</div>
-        <div class="tl-desc">未来可期</div>
       </li>
     </ul>
   </div>
