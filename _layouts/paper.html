@@ -11,29 +11,29 @@ layout: page
   .paper-detail h2.paper-sec-title{margin-top:3rem !important;margin-bottom:1.6rem !important;}
   /* 跳转锚点不被顶栏遮挡 */
   .paper-detail section[id], .paper-detail h2[id]{scroll-margin-top:75px;}
-  /* ===== 右侧文章目录（宽屏，JS 实测右侧有空位才显示） ===== */
-  #paper-toc{display:none;}
-  #paper-toc.toc-ready{
-    display:block;position:fixed;right:1.4rem;top:104px;width:252px;
-    max-height:calc(100vh - 134px);overflow-y:auto;z-index:60;
-    background:var(--card-bg,#fff);border:1px solid var(--card-border-color,#e9ecef);
-    border-radius:12px;padding:.9rem .9rem 1rem;
-    box-shadow:0 4px 18px rgba(0,0,0,.06);
-    font-size:.8rem;line-height:1.5;
+  /* ===== 右侧文章目录：注入 Chirpy 自带 panel，无需测算视口 ===== */
+  .paper-toc-panel{display:none;}
+  @media (min-width:1400px){
+    .paper-toc-panel{display:block;position:sticky;top:96px;
+      background:var(--card-bg,#fff);border:1px solid var(--card-border-color,#e9ecef);
+      border-radius:12px;padding:.9rem .9rem 1rem;
+      box-shadow:0 4px 18px rgba(0,0,0,.06);
+      font-size:.8rem;line-height:1.5;
+      max-height:calc(100vh - 126px);overflow-y:auto;}
+    .paper-toc-panel .toc-title{font-weight:700;font-size:.88rem;margin-bottom:.55rem;
+      padding:0 .5rem;color:var(--text-color);}
+    .paper-toc-panel ul{list-style:none;margin:0;padding:0;}
+    .paper-toc-panel li{margin:0;padding:0;}
+    .paper-toc-panel a{display:block;padding:.3rem .5rem;border-radius:6px;
+      color:var(--text-color);text-decoration:none;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .paper-toc-panel a:hover{background:rgba(127,127,127,.12);}
+    .paper-toc-panel li.toc-l0 a{font-weight:700;}
+    .paper-toc-panel li.toc-l1 a{font-weight:600;}
+    .paper-toc-panel li.toc-l2 a{padding-left:1.25rem;font-size:.76rem;color:var(--text-muted-color,#6c757d);}
+    .paper-toc-panel a.active{background:var(--link-color,#2a9d8f);color:#fff;}
+    .paper-toc-panel li.toc-l2 a.active{color:#fff;}
   }
-  #paper-toc .toc-title{font-weight:700;font-size:.88rem;margin-bottom:.55rem;
-    padding:0 .5rem;color:var(--text-color);}
-  #paper-toc ul{list-style:none;margin:0;padding:0;}
-  #paper-toc li{margin:0;padding:0;}
-  #paper-toc a{display:block;padding:.3rem .5rem;border-radius:6px;
-    color:var(--text-color);text-decoration:none;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  #paper-toc a:hover{background:rgba(127,127,127,.12);}
-  #paper-toc li.toc-l0 a{font-weight:700;}
-  #paper-toc li.toc-l1 a{font-weight:600;}
-  #paper-toc li.toc-l2 a{padding-left:1.25rem;font-size:.76rem;color:var(--text-muted-color,#6c757d);}
-  #paper-toc a.active{background:var(--link-color,#2a9d8f);color:#fff;}
-  #paper-toc li.toc-l2 a.active{color:#fff;}
 </style>
 
 {% comment %}从 URL 提取 arXiv ID（如 /papers/2507-21046-xxx/ -> 2507.21046），避免 front matter 解析异常{% endcomment %}
@@ -78,7 +78,7 @@ layout: page
     .paper-fulltext-inline{font-size:.95rem;line-height:1.75;}
     /* 论文全文页：把 Chirpy 的内容列从 col-xl-9 (75%) 加宽到 100% */
     @media (min-width: 1200px){
-      .col-xl-9:has(.paper-fulltext-inline){flex:0 0 100% !important;max-width:1100px !important;}
+      .col-xl-9:has(.paper-fulltext-inline){max-width:1040px !important;}
     }
     /* 脚注不做侧边注，改成文内小字，避免被裁 */
     .paper-fulltext-inline .ltx_note_outer{float:none !important;position:static !important;
@@ -109,7 +109,7 @@ layout: page
     .paper-fulltext-inline{font-size:.95rem;line-height:1.75;}
     /* 论文全文页：把 Chirpy 的内容列从 col-xl-9 (75%) 加宽到 100% */
     @media (min-width: 1200px){
-      .col-xl-9:has(.paper-fulltext-inline){flex:0 0 100% !important;max-width:1100px !important;}
+      .col-xl-9:has(.paper-fulltext-inline){max-width:1040px !important;}
     }
     /* 脚注不做侧边注，改成文内小字，避免被裁 */
     .paper-fulltext-inline .ltx_note_outer{float:none !important;position:static !important;
@@ -140,16 +140,12 @@ layout: page
 
 {{ content }}
 
-<nav id="paper-toc" aria-label="文章目录">
-  <div class="toc-title">目录</div>
-  <ul id="paper-toc-list"></ul>
-</nav>
+<!-- 目录由下方脚本注入到 #panel-wrapper -->
 <script>
 (function(){
   var container = document.querySelector('.paper-fulltext-inline');
-  var tocNav = document.getElementById('paper-toc');
-  var tocList = document.getElementById('paper-toc-list');
-  if(!container || !tocNav || !tocList) return;
+  var panelAccess = document.querySelector('#panel-wrapper .access');
+  if(!container || !panelAccess) return;
   function cleanText(el){
     var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
     return t.length > 40 ? t.slice(0, 40) + '…' : t;
@@ -173,15 +169,9 @@ layout: page
   });
   var bib = document.getElementById('bib');
   if(bib) html += '<li class="toc-l1"><a href="#bib" data-t="bib">参考文献 References</a></li>';
-  tocList.innerHTML = html;
-  // 右侧有 ≥300px 空位才显示目录（代替固定断点，适配各种宽屏）
-  function updateTocVisibility(){
-    var r = container.getBoundingClientRect();
-    var spaceRight = window.innerWidth - r.right;
-    tocNav.classList.toggle('toc-ready', spaceRight >= 300);
-  }
-  updateTocVisibility();
-  window.addEventListener('resize', updateTocVisibility);
+  panelAccess.innerHTML = '<div class="paper-toc-panel" aria-label="文章目录">'
+    + '<div class="toc-title">目录</div><ul id="paper-toc-list">' + html + '</ul></div>';
+  var tocList = document.getElementById('paper-toc-list');
   tocList.addEventListener('click', function(e){
     var a = e.target.closest('a[data-t]');
     if(!a) return;
