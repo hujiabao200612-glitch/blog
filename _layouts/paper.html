@@ -142,7 +142,7 @@ layout: page
 
 <!-- 目录由下方脚本注入到 #panel-wrapper -->
 <script>
-(function(){
+function initPaperToc(){
   var container = document.querySelector('.paper-fulltext-inline');
   var panelAccess = document.querySelector('#panel-wrapper .access');
   if(!container || !panelAccess) return;
@@ -197,6 +197,11 @@ layout: page
     if(el) obs.observe(el);
   });
   container.querySelectorAll('section[id]').forEach(function(s){ obs.observe(s); });
-})();
+}
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', initPaperToc);
+} else {
+  initPaperToc();
+}
 </script>
 </div>
