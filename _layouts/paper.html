@@ -5,12 +5,46 @@ layout: page
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap">
 
+<style>
+  /* ===== 论文详情页：标题与区块间距 ===== */
+  .paper-detail .paper-arxiv{margin-top:2.2rem !important;margin-bottom:2.5rem !important;}
+  .paper-detail h2.paper-sec-title{margin-top:3rem !important;margin-bottom:1.6rem !important;}
+  /* 跳转锚点不被顶栏遮挡 */
+  .paper-detail section[id], .paper-detail h2[id]{scroll-margin-top:75px;}
+  /* ===== 右侧文章目录（宽屏） ===== */
+  #paper-toc{display:none;}
+  @media (min-width:1700px){
+    #paper-toc.toc-ready{
+      display:block;position:fixed;right:1.4rem;top:104px;width:252px;
+      max-height:calc(100vh - 134px);overflow-y:auto;z-index:60;
+      background:var(--card-bg,#fff);border:1px solid var(--card-border-color,#e9ecef);
+      border-radius:12px;padding:.9rem .9rem 1rem;
+      box-shadow:0 4px 18px rgba(0,0,0,.06);
+      font-size:.8rem;line-height:1.5;
+    }
+    #paper-toc .toc-title{font-weight:700;font-size:.88rem;margin-bottom:.55rem;
+      padding:0 .5rem;color:var(--text-color);}
+    #paper-toc ul{list-style:none;margin:0;padding:0;}
+    #paper-toc li{margin:0;padding:0;}
+    #paper-toc a{display:block;padding:.3rem .5rem;border-radius:6px;
+      color:var(--text-color);text-decoration:none;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    #paper-toc a:hover{background:rgba(127,127,127,.12);}
+    #paper-toc li.toc-l0 a{font-weight:700;}
+    #paper-toc li.toc-l1 a{font-weight:600;}
+    #paper-toc li.toc-l2 a{padding-left:1.25rem;font-size:.76rem;color:var(--text-muted-color,#6c757d);}
+    #paper-toc a.active{background:var(--link-color,#2a9d8f);color:#fff;}
+    #paper-toc li.toc-l2 a.active{color:#fff;}
+  }
+</style>
+
 {% comment %}从 URL 提取 arXiv ID（如 /papers/2507-21046-xxx/ -> 2507.21046），避免 front matter 解析异常{% endcomment %}
 {% assign _slug = page.url | split: '/' | slice: 2, 1 | first %}
 {% assign _parts = _slug | split: '-' %}
 {% assign _arxiv = _parts[0] | append: '.' | append: _parts[1] %}
 {% assign arxiv_id = page.arxiv_id | default: _arxiv %}
 
+<div class="paper-detail">
 <div class="paper-arxiv" style="background:var(--card-bg,#f8f9fa);border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
   <div style="font-size:1.05rem;font-weight:600;margin-bottom:.4rem;">
     📄 <a href="https://arxiv.org/abs/{{ arxiv_id }}" target="_blank" rel="noopener">arXiv:{{ arxiv_id }}</a>
@@ -21,7 +55,7 @@ layout: page
   </div>
 </div>
 
-<h2>摘要 Abstract</h2>
+<h2 class="paper-sec-title" id="paper-abstract">摘要 Abstract</h2>
 
 <div class="abstract-en" style="margin-bottom:1rem;">
 {{ page.abstract_en }}
@@ -31,7 +65,7 @@ layout: page
 {{ page.abstract_zh }}
 </div>
 
-<h2>英文全文 Full Text</h2>
+<h2 class="paper-sec-title" id="paper-fulltext">英文全文 Full Text</h2>
 
 {% if page.inline_html == "paper_2507_21046_body.html" %}
 <div class="paper-fulltext-inline" style="margin-bottom:2rem;">
@@ -107,3 +141,67 @@ layout: page
 {% endif %}
 
 {{ content }}
+
+<nav id="paper-toc" aria-label="文章目录">
+  <div class="toc-title">目录</div>
+  <ul id="paper-toc-list"></ul>
+</nav>
+<script>
+(function(){
+  var container = document.querySelector('.paper-fulltext-inline');
+  var tocNav = document.getElementById('paper-toc');
+  var tocList = document.getElementById('paper-toc-list');
+  if(!container || !tocNav || !tocList) return;
+  function cleanText(el){
+    var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    return t.length > 40 ? t.slice(0, 40) + '…' : t;
+  }
+  function anchorFor(h){
+    var sec = h.closest('section[id]');
+    var id = sec ? sec.id : h.id;
+    if(!id){ id = 'paper-h-' + Math.random().toString(36).slice(2, 9); h.id = id; }
+    return id;
+  }
+  var l1sel = container.querySelector('.ltx_title_chapter') ? '.ltx_title_chapter' : '.ltx_title_section';
+  var l2sel = l1sel === '.ltx_title_chapter' ? '.ltx_title_section' : '.ltx_title_subsection';
+  var html = ''
+    + '<li class="toc-l0"><a href="#paper-abstract" data-t="paper-abstract">摘要 Abstract</a></li>'
+    + '<li class="toc-l0"><a href="#paper-fulltext" data-t="paper-fulltext">英文全文 Full Text</a></li>';
+  container.querySelectorAll(l1sel + ',' + l2sel).forEach(function(h){
+    var lvl = h.matches(l1sel) ? 1 : 2;
+    var id = anchorFor(h);
+    html += '<li class="toc-l' + lvl + '"><a href="#' + id + '" data-t="' + id + '">'
+      + cleanText(h).replace(/</g, '&lt;') + '</a></li>';
+  });
+  var bib = document.getElementById('bib');
+  if(bib) html += '<li class="toc-l1"><a href="#bib" data-t="bib">参考文献 References</a></li>';
+  tocList.innerHTML = html;
+  tocNav.classList.add('toc-ready');
+  tocList.addEventListener('click', function(e){
+    var a = e.target.closest('a[data-t]');
+    if(!a) return;
+    e.preventDefault();
+    var t = document.getElementById(a.getAttribute('data-t'));
+    if(t) t.scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+  var links = {};
+  tocList.querySelectorAll('a[data-t]').forEach(function(a){ links[a.getAttribute('data-t')] = a; });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var id = en.target.id || ((en.target.closest && en.target.closest('section[id]')) || {}).id;
+      var a = id && links[id];
+      if(a){
+        tocList.querySelectorAll('a.active').forEach(function(x){ x.classList.remove('active'); });
+        a.classList.add('active');
+      }
+    });
+  }, {rootMargin: '-15% 0px -75% 0px'});
+  ['paper-abstract', 'paper-fulltext', 'bib'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) obs.observe(el);
+  });
+  container.querySelectorAll('section[id]').forEach(function(s){ obs.observe(s); });
+})();
+</script>
+</div>
