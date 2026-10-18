@@ -13,6 +13,12 @@ layout: post
   .paper-detail h2.paper-sec-title{margin-top:3rem !important;margin-bottom:1.6rem !important;}
   /* 跳转锚点不被顶栏遮挡 */
   .paper-detail section[id], .paper-detail h2[id]{scroll-margin-top:75px;}
+  /* 注入原生右栏的目录：去 bullets，仿原生 Contents 排版 */
+  #panel-wrapper #toc ul{list-style:none;margin:0;padding:0;}
+  #panel-wrapper #toc li{margin:0;padding:.15rem 0;}
+  #panel-wrapper #toc a{color:var(--text-muted-color,#6c757d);text-decoration:none;}
+  #panel-wrapper #toc a:hover{color:var(--text-color);}
+  #panel-wrapper #toc .toc-title{font-weight:700;margin-bottom:.5rem;color:var(--text-color);}
 </style>
 
 {% comment %}从 URL 提取 arXiv ID（如 /papers/2507-21046-xxx/ -> 2507.21046），避免 front matter 解析异常{% endcomment %}
@@ -146,7 +152,6 @@ window.addEventListener('load', function(){
         var id = (sec && sec.id) || h.id;
         if(!id){ id='ph-'+Math.random().toString(36).slice(2,8); h.id=id; }
         var t=(h.textContent||'').replace(/\s+/g,' ').trim();
-        if(t.length>48) t=t.slice(0,48)+'…';
         html += '<li><a href="#'+id+'">'+t.replace(/</g,'&lt;')+'</a></li>';
       });
       if(document.getElementById('bib')) html += '<li><a href="#bib">参考文献 References</a></li>';
