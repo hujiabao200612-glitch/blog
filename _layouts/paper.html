@@ -121,12 +121,12 @@ layout: post
 
 </div><!-- /paper-detail -->
 <script>
-// 填充 Chirpy 原生右栏 #panel-wrapper 的目录
+/* 填充 Chirpy 原生右栏 #panel-wrapper 的目录。注意：构建时会把整段压成单行，注释只能用块注释 */
 window.addEventListener('load', function(){
   try{
     var panel = document.querySelector('#panel-wrapper');
     if(!panel) return;
-    // 找原生 TOC 容器，不存在则创建
+    /* 找原生 TOC 容器，不存在则创建 */
     var tocNav = panel.querySelector('#toc');
     if(!tocNav){
       tocNav = document.createElement('nav');
