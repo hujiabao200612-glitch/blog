@@ -12,10 +12,21 @@ layout: page
      （Chirpy 默认 container 有 max-width 且居中，超宽屏左右必留白——这就是之前留白的根源） */
   @media (min-width: 1200px){
     #main-wrapper{justify-content:flex-start !important;}
-    #main-wrapper > .container{max-width:none !important;width:100% !important;}
+    #main-wrapper > .container{max-width:none !important;width:100% !important;
+      padding-left:2rem !important;padding-right:2rem !important;}
+    /* 论文页：正文与右侧目录为真正的左右栅格列（75%/25%），顶满容器 */
+    #main-wrapper > .container > .row{display:flex !important;flex-wrap:nowrap !important;
+      margin-left:0 !important;margin-right:0 !important;}
+    #main-wrapper > .container > .row > #main-content,
+    #main-wrapper > .container > .row > main,
+    #main-wrapper > .container > .row > .col-xl-8,
+    #main-wrapper > .container > .row > [class*="col-"]:first-child{
+      flex:0 0 75% !important;max-width:75% !important;}
+    #panel-wrapper{display:block !important;
+      flex:0 0 25% !important;max-width:25% !important;
+      padding-left:1.5rem !important;}
   }
-  /* 目录 panel 用 Bootstrap 自然 25%（容器 1760px 时约 440px，足够宽）；内容 75%。
-     不要给 panel 设固定像素宽，否则和 75% 内容相加超 100% 会换行掉到底部。 */
+  /* 目录 panel 占右列 25%，sticky 跟随滚动；不再用 fixed 浮动 */
   #topbar-wrapper #topbar{padding-bottom:.4rem !important;}
   .paper-detail .paper-arxiv{margin-top:2.2rem !important;margin-bottom:2.5rem !important;}
   .paper-detail h2.paper-sec-title{margin-top:3rem !important;margin-bottom:1.6rem !important;}
