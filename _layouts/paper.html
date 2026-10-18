@@ -143,7 +143,10 @@ layout: page
 <div class="col-xl-3 paper-toc-sidebar">
   <aside class="paper-toc-box" aria-label="文章目录">
     <div class="toc-title">目录</div>
-    <ul id="paper-toc-list"></ul>
+    <ul id="paper-toc-list">
+      <li><a href="#paper-abstract">摘要 Abstract</a></li>
+      <li><a href="#paper-fulltext">英文全文 Full Text</a></li>
+    </ul>
   </aside>
 </div>
 </div><!-- /row -->
@@ -153,32 +156,29 @@ window.addEventListener('load', function(){
   try{
     var box = document.getElementById('paper-toc-list');
     if(!box) return;
-    var html = '<li><a href="#paper-abstract">摘要 Abstract</a></li>'
-      + '<li><a href="#paper-fulltext">英文全文 Full Text</a></li>';
     var container = document.querySelector('.paper-fulltext-inline');
-    if(container){
-      var l1sel = container.querySelector('.ltx_title_chapter') ? '.ltx_title_chapter' : '.ltx_title_section';
-      var l2sel = (l1sel === '.ltx_title_chapter') ? '.ltx_title_section' : '.ltx_title_subsection';
-      var heads = container.querySelectorAll(l1sel + ',' + l2sel);
-      heads.forEach(function(h){
-        var lvl = h.matches(l1sel) ? 1 : 2;
-        var sec = h.closest('section[id]');
-        var id = (sec && sec.id) || h.id;
-        if(!id){ id = 'ph-' + Math.random().toString(36).slice(2,8); h.id = id; }
-        var t = (h.textContent||'').replace(/\s+/g,' ').trim();
-        if(t.length > 48) t = t.slice(0,48) + '…';
-        html += '<li class="toc-l'+lvl+'"><a href="#'+id+'">'+t.replace(/</g,'&lt;')+'</a></li>';
-      });
-      if(document.getElementById('bib')) html += '<li><a href="#bib">参考文献 References</a></li>';
-    }
-    box.innerHTML = html;
-    // 点击平滑滚动
+    if(!container) return;
+    var l1sel = container.querySelector('.ltx_title_chapter') ? '.ltx_title_chapter' : '.ltx_title_section';
+    var l2sel = (l1sel === '.ltx_title_chapter') ? '.ltx_title_section' : '.ltx_title_subsection';
+    var html = '';
+    container.querySelectorAll(l1sel + ',' + l2sel).forEach(function(h){
+      var lvl = h.matches(l1sel) ? 1 : 2;
+      var sec = h.closest('section[id]');
+      var id = (sec && sec.id) || h.id;
+      if(!id){ id = 'ph-' + Math.random().toString(36).slice(2,8); h.id = id; }
+      var t = (h.textContent||'').replace(/\s+/g,' ').trim();
+      if(t.length > 48) t = t.slice(0,48) + '…';
+      html += '<li class="toc-l'+lvl+'"><a href="#'+id+'">'+t.replace(/</g,'&lt;')+'</a></li>';
+    });
+    if(document.getElementById('bib')) html += '<li><a href="#bib">参考文献 References</a></li>';
+    if(html) box.innerHTML += html;
+    // 点击平滑滚动（委托，兼容硬编码项）
     box.addEventListener('click', function(e){
       var a = e.target.closest('a[href^="#"]');
       if(!a) return;
       var t = document.querySelector(a.getAttribute('href'));
       if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
     });
-  }catch(err){ /* 静默失败，目录保持空 */ }
+  }catch(err){}
 });
 </script>
