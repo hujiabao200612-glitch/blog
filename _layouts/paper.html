@@ -12,11 +12,8 @@ layout: page
   @media (min-width: 1200px){
     #main-wrapper > .container{max-width:1760px !important;}
   }
-  /* 目录 panel 固定 360px（原来 25% 太窄标题被截断），内容占剩余宽度 */
-  @media (min-width: 1400px){
-    #panel-wrapper:has(.paper-toc-panel){flex:0 0 360px !important;max-width:360px !important;}
-    .col-xl-9:has(.paper-fulltext-inline){flex:1 1 auto !important;max-width:1400px !important;}
-  }
+  /* 目录 panel 用 Bootstrap 自然 25%（容器 1760px 时约 440px，足够宽）；内容 75%。
+     不要给 panel 设固定像素宽，否则和 75% 内容相加超 100% 会换行掉到底部。 */
   #topbar-wrapper #topbar{padding-bottom:.4rem !important;}
   .paper-detail .paper-arxiv{margin-top:2.2rem !important;margin-bottom:2.5rem !important;}
   .paper-detail h2.paper-sec-title{margin-top:3rem !important;margin-bottom:1.6rem !important;}
