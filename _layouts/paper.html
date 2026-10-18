@@ -10,7 +10,12 @@ layout: page
   #topbar-wrapper{padding-top:1.1rem !important;}
   /* 外层 container 才是真正的宽度瓶颈（Bootstrap 默认 1320px），放宽它内容才能吃满 */
   @media (min-width: 1200px){
-    #main-wrapper > .container{max-width:1600px !important;}
+    #main-wrapper > .container{max-width:1760px !important;}
+  }
+  /* 目录 panel 固定 360px（原来 25% 太窄标题被截断），内容占剩余宽度 */
+  @media (min-width: 1400px){
+    #panel-wrapper:has(.paper-toc-panel){flex:0 0 360px !important;max-width:360px !important;}
+    .col-xl-9:has(.paper-fulltext-inline){flex:1 1 auto !important;max-width:1400px !important;}
   }
   #topbar-wrapper #topbar{padding-bottom:.4rem !important;}
   .paper-detail .paper-arxiv{margin-top:2.2rem !important;margin-bottom:2.5rem !important;}
@@ -84,7 +89,6 @@ layout: page
     .paper-fulltext-inline{font-size:.95rem;line-height:1.75;}
     /* 论文全文页：把 Chirpy 的内容列从 col-xl-9 (75%) 加宽到 100% */
     @media (min-width: 1200px){
-      .col-xl-9:has(.paper-fulltext-inline){max-width:1280px !important;}
     }
     /* 脚注不做侧边注，改成文内小字，避免被裁 */
     .paper-fulltext-inline .ltx_note_outer{float:none !important;position:static !important;
@@ -115,7 +119,6 @@ layout: page
     .paper-fulltext-inline{font-size:.95rem;line-height:1.75;}
     /* 论文全文页：把 Chirpy 的内容列从 col-xl-9 (75%) 加宽到 100% */
     @media (min-width: 1200px){
-      .col-xl-9:has(.paper-fulltext-inline){max-width:1280px !important;}
     }
     /* 脚注不做侧边注，改成文内小字，避免被裁 */
     .paper-fulltext-inline .ltx_note_outer{float:none !important;position:static !important;
