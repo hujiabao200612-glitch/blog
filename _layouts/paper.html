@@ -1,5 +1,7 @@
 ---
 layout: page
+panel_includes:
+  - toc
 ---
 
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
@@ -120,25 +122,3 @@ layout: page
 {{ content }}
 
 </div><!-- /paper-detail -->
-<script>
-/* 原生目录注入：构建压单行，用块注释 */
-window.addEventListener('load', function(){
-  try{
-    var panel = document.querySelector('#panel-wrapper');
-    if(!panel) return;
-    var tocNav = panel.querySelector('#toc');
-    if(!tocNav){
-      tocNav = document.createElement('nav');
-      tocNav.id = 'toc';
-      tocNav.setAttribute('aria-label','Table of Contents');
-      var access = panel.querySelector('.access');
-      if(access) panel.insertBefore(tocNav, access);
-      else panel.prepend(tocNav);
-    }
-    var html = '<ul>'
-      + '<li><a href="#paper-abstract">摘要 Abstract</a></li>'
-      + '<li><a href="#paper-fulltext">英文全文 Full Text</a></li></ul>';
-    tocNav.innerHTML = html;
-  }catch(e){}
-});
-</script>
