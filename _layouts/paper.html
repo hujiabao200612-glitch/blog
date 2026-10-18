@@ -13,22 +13,23 @@ layout: page
   .paper-detail h2.paper-sec-title{margin-top:3rem !important;margin-bottom:1.6rem !important;}
   /* 跳转锚点不被顶栏遮挡 */
   .paper-detail section[id], .paper-detail h2[id]{scroll-margin-top:75px;}
-  /* 右侧目录：Bootstrap 栅格右列，sticky */
+  /* 右侧目录：仿 Chirpy 原生 Contents 面板（无卡片，简洁列表） */
   .paper-toc-sidebar{display:none;}
   @media (min-width:1200px){
     .paper-toc-sidebar{display:block;}
     .paper-toc-box{position:sticky;top:96px;
-      background:var(--card-bg,#fff);border:1px solid var(--card-border-color,#e9ecef);
-      border-radius:12px;padding:1rem;
+      font-size:.85rem;line-height:1.6;
       max-height:calc(100vh - 120px);overflow-y:auto;
-      font-size:.82rem;line-height:1.5;}
-    .paper-toc-box .toc-title{font-weight:700;margin-bottom:.6rem;}
+      padding-left:1rem;border-left:1px solid var(--card-border-color,#e9ecef);}
+    .paper-toc-box .toc-title{font-weight:700;margin-bottom:.5rem;font-size:.9rem;}
     .paper-toc-box ul{list-style:none;margin:0;padding:0;}
-    .paper-toc-box a{display:block;padding:.25rem .5rem;border-radius:6px;
-      color:var(--text-color);text-decoration:none;}
-    .paper-toc-box a:hover{background:rgba(127,127,127,.12);}
-    .paper-toc-box a.active{background:var(--link-color);color:#fff;}
-    .paper-toc-box li.toc-l2 a{padding-left:1.2rem;font-size:.78rem;opacity:.85;}
+    .paper-toc-box li{margin:0;padding:0;}
+    .paper-toc-box a{display:block;padding:.2rem 0 .2rem .75rem;
+      color:var(--text-muted-color,#6c757d);text-decoration:none;
+      border-left:2px solid transparent;margin-left:-1rem;padding-left:calc(.75rem + 1rem - 2px);}
+    .paper-toc-box a:hover{color:var(--text-color);}
+    .paper-toc-box a.active{color:var(--link-color);border-left-color:var(--link-color);font-weight:600;}
+    .paper-toc-box li.toc-l2 a{font-size:.8rem;}
   }
 </style>
 
@@ -148,63 +149,36 @@ layout: page
 </div><!-- /row -->
 </div><!-- /paper-detail -->
 <script>
-(function(){
-  function initToc(){
+window.addEventListener('load', function(){
+  try{
     var box = document.getElementById('paper-toc-list');
     if(!box) return;
+    var html = '<li><a href="#paper-abstract">摘要 Abstract</a></li>'
+      + '<li><a href="#paper-fulltext">英文全文 Full Text</a></li>';
     var container = document.querySelector('.paper-fulltext-inline');
-    function text(el){
-      var t=(el.textContent||'').replace(/\s+/g,' ').trim();
-      return t.length>48 ? t.slice(0,48)+'…' : t;
-    }
-    function ensureId(el, prefix){
-      if(el.id) return el.id;
-      var id = prefix + Math.random().toString(36).slice(2,8);
-      el.id = id; return id;
-    }
-    var html = '<li><a href="#paper-abstract" data-t="paper-abstract">摘要 Abstract</a></li>'
-      + '<li><a href="#paper-fulltext" data-t="paper-fulltext">英文全文 Full Text</a></li>';
     if(container){
-      var l1 = container.querySelector('.ltx_title_chapter') ? '.ltx_title_chapter' : '.ltx_title_section';
-      var l2 = l1==='.ltx_title_chapter' ? '.ltx_title_section' : '.ltx_title_subsection';
-      container.querySelectorAll(l1+','+l2).forEach(function(h){
-        var lvl = h.matches(l1) ? 1 : 2;
+      var l1sel = container.querySelector('.ltx_title_chapter') ? '.ltx_title_chapter' : '.ltx_title_section';
+      var l2sel = (l1sel === '.ltx_title_chapter') ? '.ltx_title_section' : '.ltx_title_subsection';
+      var heads = container.querySelectorAll(l1sel + ',' + l2sel);
+      heads.forEach(function(h){
+        var lvl = h.matches(l1sel) ? 1 : 2;
         var sec = h.closest('section[id]');
-        var id = (sec&&sec.id) || h.id || ensureId(h,'ph-');
-        html += '<li class="toc-l'+lvl+'"><a href="#'+id+'" data-t="'+id+'">'
-          + text(h).replace(/</g,'&lt;') + '</a></li>';
+        var id = (sec && sec.id) || h.id;
+        if(!id){ id = 'ph-' + Math.random().toString(36).slice(2,8); h.id = id; }
+        var t = (h.textContent||'').replace(/\s+/g,' ').trim();
+        if(t.length > 48) t = t.slice(0,48) + '…';
+        html += '<li class="toc-l'+lvl+'"><a href="#'+id+'">'+t.replace(/</g,'&lt;')+'</a></li>';
       });
-      if(document.getElementById('bib'))
-        html += '<li><a href="#bib" data-t="bib">参考文献 References</a></li>';
+      if(document.getElementById('bib')) html += '<li><a href="#bib">参考文献 References</a></li>';
     }
     box.innerHTML = html;
+    // 点击平滑滚动
     box.addEventListener('click', function(e){
-      var a = e.target.closest('a[data-t]');
+      var a = e.target.closest('a[href^="#"]');
       if(!a) return;
-      e.preventDefault();
-      var t = document.getElementById(a.getAttribute('data-t'));
-      if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+      var t = document.querySelector(a.getAttribute('href'));
+      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
     });
-    // 高亮当前章节
-    var links = {};
-    box.querySelectorAll('a[data-t]').forEach(function(a){ links[a.getAttribute('data-t')]=a; });
-    var obs = new IntersectionObserver(function(es){
-      es.forEach(function(en){
-        if(!en.isIntersecting) return;
-        var id = en.target.id;
-        var a = id && links[id];
-        if(a){
-          box.querySelectorAll('a.active').forEach(function(x){x.classList.remove('active');});
-          a.classList.add('active');
-        }
-      });
-    },{rootMargin:'-15% 0px -70% 0px'});
-    ['paper-abstract','paper-fulltext','bib'].forEach(function(id){
-      var el=document.getElementById(id); if(el) obs.observe(el);
-    });
-    if(container) container.querySelectorAll('section[id]').forEach(function(s){obs.observe(s);});
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initToc);
-  else initToc();
-})();
+  }catch(err){ /* 静默失败，目录保持空 */ }
+});
 </script>
