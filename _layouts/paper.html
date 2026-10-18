@@ -4,30 +4,54 @@ panel_includes:
   - toc
 ---
 
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap">
+
+<style>
+  .paper-detail .paper-arxiv{margin-top:2.2rem !important;margin-bottom:2.5rem !important;}
+  .paper-detail h2.paper-sec-title{margin-top:3rem !important;margin-bottom:1.6rem !important;}
+  .paper-detail section[id], .paper-detail h2[id]{scroll-margin-top:75px;}
+</style>
+
 {% comment %}从 URL 提取 arXiv ID{% endcomment %}
 {% assign _slug = page.url | split: '/' | slice: 2, 1 | first %}
 {% assign _parts = _slug | split: '-' %}
 {% assign _arxiv = _parts[0] | append: '.' | append: _parts[1] %}
 {% assign arxiv_id = page.arxiv_id | default: _arxiv %}
 
-<p>
-  <a href="https://arxiv.org/abs/{{ arxiv_id }}" target="_blank" rel="noopener">arXiv:{{ arxiv_id }}</a>
-  （英文全文：<a href="https://arxiv.org/html/{{ arxiv_id }}" target="_blank" rel="noopener">HTML</a> · <a href="https://arxiv.org/pdf/{{ arxiv_id }}" target="_blank" rel="noopener">PDF</a>）
-</p>
-<p>{{ page.authors | join: ", " }} · {{ page.date | date: "%Y-%m-%d" }}</p>
+<div class="paper-detail">
+<div class="paper-arxiv" style="background:var(--card-bg,#f8f9fa);border:1px solid var(--card-border-color,#e9ecef);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+  <div style="font-size:1.05rem;font-weight:600;margin-bottom:.4rem;">
+    📄 <a href="https://arxiv.org/abs/{{ arxiv_id }}" target="_blank" rel="noopener">arXiv:{{ arxiv_id }}</a>
+    <span style="font-weight:400;font-size:.85rem;color:var(--text-muted-color,#6c757d);">（英文全文：<a href="https://arxiv.org/html/{{ arxiv_id }}" target="_blank" rel="noopener">HTML</a> · <a href="https://arxiv.org/pdf/{{ arxiv_id }}" target="_blank" rel="noopener">PDF</a>）</span>
+  </div>
+  <div style="font-size:.9rem;color:var(--text-muted-color,#6c757d);">
+    {{ page.authors | join: ", " }} · {{ page.date | date: "%Y-%m-%d" }}
+  </div>
+</div>
 
-<h2 id="paper-abstract">摘要 Abstract</h2>
+<h2 class="paper-sec-title" id="paper-abstract">摘要 Abstract</h2>
 
+<div class="abstract-en" style="margin-bottom:1rem;">
 {{ page.abstract_en }}
+</div>
 
-<blockquote>{{ page.abstract_zh }}</blockquote>
+<div class="abstract-zh" style="border-left:3px solid var(--link-color,#2a9d8f);padding-left:1rem;margin-bottom:2rem;">
+{{ page.abstract_zh }}
+</div>
 
-<h2 id="paper-fulltext">英文全文 Full Text</h2>
+<h2 class="paper-sec-title" id="paper-fulltext">英文全文 Full Text</h2>
 
 {% if page.inline_html %}
+<div class="paper-fulltext-inline" style="margin-bottom:2rem;">
   {% include {{ page.inline_html }} %}
+</div>
 {% else %}
+<div class="paper-fulltext" style="margin-bottom:0.75rem;">
   <p>全文托管于 arXiv，此处为嵌入阅读。若加载异常，请直接访问 <a href="https://arxiv.org/html/{{ arxiv_id }}" target="_blank" rel="noopener">arXiv HTML</a>。</p>
+</div>
 {% endif %}
 
 {{ content }}
+
+</div>
