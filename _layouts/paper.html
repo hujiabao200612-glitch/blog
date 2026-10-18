@@ -12,6 +12,8 @@ layout: page
      正文与目录沿用 Bootstrap 自然栅格（main=col-xl-9 75%，panel=col-xl-3 25%），不硬写 flex。 */
   @media (min-width: 1200px){
     #main-wrapper > .container{max-width:1600px !important;}
+    /* 目录右列保证最小宽度，避免过窄导致文字挤压 */
+    #panel-wrapper{min-width:280px !important;}
   }
   /* 目录 panel：sticky 跟随滚动 */
   #panel-wrapper .paper-toc-panel{position:sticky;top:96px;}
@@ -35,7 +37,7 @@ layout: page
     .paper-toc-panel li{margin:0;padding:0;}
     .paper-toc-panel a{display:block;padding:.3rem .5rem;border-radius:6px;
       color:var(--text-color);text-decoration:none;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+      line-height:1.4;}
     .paper-toc-panel a:hover{background:rgba(127,127,127,.12);}
     .paper-toc-panel li.toc-l0 a{font-weight:700;}
     .paper-toc-panel li.toc-l1 a{font-weight:600;}
