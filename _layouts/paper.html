@@ -8,9 +8,11 @@ layout: page
 <style>
   /* ===== 论文详情页：标题与区块间距 ===== */
   #topbar-wrapper{padding-top:1.1rem !important;}
-  /* 外层 container 才是真正的宽度瓶颈（Bootstrap 默认 1320px），放宽它内容才能吃满 */
+  /* 论文页去掉模板的居中固定宽度限制：容器占满可用宽度，右侧不再留白。
+     （Chirpy 默认 container 有 max-width 且居中，超宽屏左右必留白——这就是之前留白的根源） */
   @media (min-width: 1200px){
-    #main-wrapper > .container{max-width:1760px !important;}
+    #main-wrapper{justify-content:flex-start !important;}
+    #main-wrapper > .container{max-width:none !important;width:100% !important;}
   }
   /* 目录 panel 用 Bootstrap 自然 25%（容器 1760px 时约 440px，足够宽）；内容 75%。
      不要给 panel 设固定像素宽，否则和 75% 内容相加超 100% 会换行掉到底部。 */
