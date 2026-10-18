@@ -3,81 +3,9 @@
 <span id="id1.1" class="ltx_text ltx_font_bold">A Survey of Self-Evolving Agents</span> 
 <br class="ltx_break"></span>What, When, How, and Where to Evolve on the Path to Artificial Super Intelligence
 </h1>
-<div class="ltx_authors">
-<span class="ltx_creator ltx_role_author">
-<span class="ltx_personname">Huan-ang Gao
-</span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname">Jiayi Geng
-</span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname">Wenyue Hua
-</span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname">Mengkang Hu
-</span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname">Xinzhe Juan
-</span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname">Hongzhang Liu
-</span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname"><span id="id2" class="ltx_text ltx_font_bold">Shilong Liu, Jiahao Qiu, Xuan Qi, Qihan Ren, Yiran Wu, Hongru Wang, Han Xiao,</span>
-<span id="id3" class="ltx_text ltx_font_bold">Yuhang Zhou, Shaokun Zhang, Jiayi Zhang, Jinyu Xiang, Yixiong Fang, Qiwen Zhao,</span>
-<span id="id4" class="ltx_text ltx_font_bold">Dongrui Liu, Cheng Qian, Zhenhailong Wang, Minda Hu,</span>
-<span id="id5" class="ltx_text ltx_font_bold">Huazheng Wang, Qingyun Wu, Heng Ji, Mengdi Wang</span>
-</span><span class="ltx_author_notes"><span class="ltx_author_notes_content">
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Carnegie Mellon University
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Shanghai Jiao Tong University
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Pennsylvania State University
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Oregon State University
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>The Chinese University of Hong Kong
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>The Hong Kong University of Science and Technology (Guangzhou)
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>University of California San Diego
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>University of Illinois Urbana-Champaign<span id="id6" class="ltx_text ltx_font_bold">Github Repo: <a href="https://github.com/CharlesQ9/Self-Evolving-Agents" title="" class="ltx_ref ltx_url ltx_font_typewriter ltx_font_medium">https://github.com/CharlesQ9/Self-Evolving-Agents</a></span>
-</span></span></span></span>
-<span class="ltx_creator ltx_role_author"><span class="ltx_author_notes"><span class="ltx_author_notes_content">
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span><span id="id7" class="ltx_text ltx_font_italic" style="font-size:90%;">Princeton University</span>
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Princeton AI Lab
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Tsinghua University
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>University of Sydney
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>University of Michigan
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Fudan University
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>The University of Hong Kong
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>University of California, Santa Barbara
-</span>
-<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>University of Edinburgh
-</span></span></span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname"><sup id="id8" class="ltx_sup">†</sup>Equal contribution
-</span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname">the order is determined alphabetically
-</span></span>
-<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
-<span class="ltx_personname">Corresponding Author
-</span></span></div>
 
-<div id="abstract1" class="ltx_abstract"><h6 class="ltx_title ltx_title_abstract">Abstract</h6>
-    
-<p id="abstract1.1" class="ltx_p">Large Language Models (LLMs) have demonstrated remarkable capabilities across diverse tasks but remain fundamentally static, unable to adapt their internal parameters to novel tasks, evolving knowledge domains, or dynamic interaction contexts. As LLMs are increasingly deployed in open-ended, interactive environments, this static nature has become a critical bottleneck, necessitating agents that can adaptively reason, act, and evolve in real time. This paradigm shift —from scaling static models to developing self-evolving agents — has sparked growing interest in architectures and methods enabling continual learning and adaptation from data, interactions, and experiences. This survey provides the first systematic and comprehensive review of self-evolving agents, organizing the field around three foundational dimensions — <span id="abstract1.1.1" class="ltx_text ltx_font_italic">what to evolve, when to evolve, and how to evolve</span>. We examine evolutionary mechanisms across agent components (e.g., models, memory, tools, architecture), categorize adaptation methods by stages (e.g., intra-test-time, inter-test-time), and analyze the algorithmic and architectural designs that guide evolutionary adaptation (e.g., scalar rewards, textual feedback, single-agent and multi-agent systems). Additionally, we analyze evaluation metrics and benchmarks tailored for self-evolving agents, highlight applications in domains such as coding, education, and healthcare, and identify critical challenges and research directions in safety, scalability, and co-evolutionary dynamics. By providing a structured framework for understanding and designing self-evolving agents, this survey establishes a roadmap for advancing more adaptive, capable, robust, and versatile agentic systems in both research and real-world deployments, and ultimately sheds light on the realization of Artificial Super Intelligence (ASI) where agents evolve autonomously and perform beyond human-level intelligence across a wide array of tasks.</p>
-  
-</div>
+
+
 <div id="p1" class="ltx_para ltx_noindent ltx_align_bottom">
 <br class="ltx_break">
 <br class="ltx_break">
