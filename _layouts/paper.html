@@ -9,8 +9,9 @@ panel_includes:
   .paper-detail .paper-arxiv{margin-top:2.2rem !important;margin-bottom:2.5rem !important;}
   .paper-detail h2.paper-sec-title{margin-top:3rem !important;margin-bottom:1.6rem !important;}
   .paper-detail section[id], .paper-detail h2[id]{scroll-margin-top:75px;}
-  /* arXiv 正文内容：图片自适应 */
+  /* arXiv 正文内容：图片自适应；宽表格横向滚动，不撑破正文栏 */
   .paper-fulltext-inline img{max-width:100% !important;height:auto !important;}
+  .paper-fulltext-inline .ltx-table-scroll{overflow-x:auto;max-width:100%;}
 </style>
 
 {% comment %}从 URL 提取 arXiv ID{% endcomment %}
