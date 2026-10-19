@@ -59,3 +59,44 @@ panel_includes:
 {{ content }}
 
 </div>
+
+{% comment %}原生目录移植：加载 tocbot 并初始化（Chirpy post 布局同款）{% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/tocbot@4.32.2/dist/tocbot.min.js"></script>
+<script>
+/* 移植自 Chirpy 原生目录：扫描正文 h2/h3/h4，生成右栏目录 */
+(function() {
+  function initPaperToc() {
+    if (typeof tocbot === 'undefined') return;
+    var content = document.querySelector('.paper-detail');
+    if (!content) return;
+    var headings = content.querySelectorAll('h2, h3, h4');
+    if (headings.length === 0) return;
+    /* 给没有 id 的标题加 id，保证锚点可用 */
+    headings.forEach(function(h, i) {
+      if (!h.id) h.id = 'paper-toc-' + i;
+    });
+    /* 往右栏 #panel-wrapper 注入原生目录结构（panel_includes 在 page 链下不生效，改用 JS 注入） */
+    var panel = document.getElementById('panel-wrapper');
+    if (!panel || document.getElementById('toc-wrapper')) return;
+    var section = document.createElement('section');
+    section.id = 'toc-wrapper';
+    section.className = 'ps-0 pe-4 pb-4';
+    section.innerHTML = '<h2 class="panel-heading ps-3 pb-2 mb-0">目录</h2><nav id="toc"></nav>';
+    panel.appendChild(section);
+    tocbot.init({
+      tocSelector: '#toc',
+      contentSelector: '.paper-detail',
+      ignoreSelector: '[data-toc-skip]',
+      headingSelector: 'h2, h3, h4',
+      orderedList: false,
+      scrollSmooth: false,
+      headingsOffset: 32
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPaperToc);
+  } else {
+    initPaperToc();
+  }
+})();
+</script>
