@@ -13,6 +13,8 @@ panel_includes:
   .paper-fulltext-inline img{max-width:100% !important;height:auto !important;}
   .paper-fulltext-inline .ltx-table-scroll{display:block !important;width:100% !important;max-width:100% !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
   .paper-fulltext-inline .ltx-table-scroll > table{min-width:800px !important;}
+  /* 覆盖 arXiv 固定高度的表格外层，防止内容溢出重叠 */
+  .paper-fulltext-inline .ltx_transformed_outer{height:auto !important;min-height:0 !important;}
 </style>
 
 {% comment %}从 URL 提取 arXiv ID{% endcomment %}
